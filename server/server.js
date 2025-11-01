@@ -4,6 +4,7 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import coinRoutes from "./routes/coinRoutes.js";
+import debugRoutes from "./routes/debugRoutes.js";
 import { startCronJob } from "./utils/cronJob.js";
 
 
@@ -18,6 +19,7 @@ app.get('/', (req, res) => res.send("Testing Work"))
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/coins", coinRoutes);
+app.use("/api/debug", debugRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
