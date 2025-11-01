@@ -16,6 +16,11 @@ export const getCoins = async (req, res) => {
           per_page: 10,
           page: 1,
         },
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Node Server; CryptoTrackerApp)", // prevents 403/429
+          "Accept-Encoding": "gzip,deflate,compress", // speeds up data transfer
+        },
+        timeout: 10000, // 10 sec timeout
       }
     );
 
@@ -47,6 +52,34 @@ export const getCoins = async (req, res) => {
       data,
     });
   } catch (error) {
+    // 🔁 Backup Fallback API (mirror)
+    try {
+      const backup = await axios.get(
+        "https://api.coingecko.net/api/v3/coins/markets",
+        {
+          params: {
+            vs_currency: "usd",
+            order: "market_cap_desc",
+            per_page: 10,
+            page: 1,
+          },
+          headers: { "User-Agent": "Mozilla/5.0" },
+        }
+      );
+
+      res.json({
+        message: "Fetched from backup API ✅",
+        count: backup.data.length,
+        data: backup.data,
+      });
+    } catch (fallbackError) {
+      console.error("Backup API failed:", fallbackError.message);
+      res.status(500).json({
+        message: "Both CoinGecko APIs failed. Please try again later.",
+        error: fallbackError.message,
+      });
+    }
+
     console.error("getCoins error:", error);
     res.status(500).json({
       message: "Failed to fetch live coins data",
