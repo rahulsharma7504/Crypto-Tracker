@@ -3,7 +3,6 @@ import { getCoins, saveHistory, getCoinHistory } from "../controllers/coinContro
 
 
 const router = express.Router();
-router.get("/", getCoins);
 
 router.get("/", getCoins);
 router.post("/history", saveHistory);

@@ -10,7 +10,7 @@ export const startCronJob = () => {
   // Every 1 hour (at minute 0)
   cron.schedule("0 * * * *", async () => {
     console.log(" Cron Job Running: Fetching latest crypto data...");
-
+    
     try {
       const { data } = await axios.get(
         "https://api.coingecko.com/api/v3/coins/markets",

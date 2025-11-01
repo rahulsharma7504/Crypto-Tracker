@@ -47,6 +47,7 @@ export const getCoins = async (req, res) => {
       data,
     });
   } catch (error) {
+    console.error("getCoins error:", error);
     res.status(500).json({
       message: "Failed to fetch live coins data",
       error: error.message,
@@ -84,6 +85,7 @@ export const saveHistory = async (req, res) => {
     await HistoryData.insertMany(records);
     res.json({ message: "History saved successfully", count: records.length });
   } catch (err) {
+    console.error("saveHistory error:", err);
     res.status(500).json({ message: "Error saving history", error: err.message });
   }
 };
@@ -96,6 +98,7 @@ export const getCoinHistory = async (req, res) => {
     const history = await HistoryData.find({ coinId }).sort({ timestamp: 1 });
     res.json(history);
   } catch (err) {
+    console.error("getCoinHistory error:", err);
     res.status(500).json({ message: "Error fetching coin history", error: err.message });
   }
 };
