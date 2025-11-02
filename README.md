@@ -13,10 +13,11 @@ A simple crypto tracker built with a React frontend and an Express + MongoDB bac
 
 ---
 
+
 ## Quick links
 
-- Frontend (deployed): https://your-frontend-url.example.com  <!-- replace with actual URL -->
-- Backend (deployed): https://your-backend-url.example.com   <!-- replace with actual URL -->
+- Frontend (deployed): https://crypto-tracker-client-iota.vercel.app  <!-- replace with actual URL -->
+- Backend (deployed): https://crypto-tracker-backend-6h95.onrender.com   <!-- replace with actual URL -->
 
 Replace the above URLs with your actual deployed URLs.
 
@@ -52,7 +53,7 @@ ADMIN_PASSWORD=<admin-password>
 Client: use Vite environment variable to point to backend (create `client/.env` or set in hosting):
 
 ```
-VITE_API_URL=https://your-backend-url.example.com
+VITE_API_URL=https://crypto-tracker-backend-6h95.onrender.com
 ```
 
 Notes:
@@ -104,6 +105,7 @@ Usage and notes:
 - You can trigger history collection manually by calling the backend route `POST /api/coins/history` if you want an on-demand snapshot.
 - Make sure the server can reach CoinGecko (no firewall or networking restrictions).
 
+![My Image](server/static/3.png)
 ---
 
 ## API overview
@@ -113,7 +115,7 @@ Usage and notes:
 - `POST /api/coins/history` — (optional/manual) fetch current coins and save history records
 - `GET /api/coins/history/:coinId` — Returns historical records for a given coin ID
 
-All API endpoints are prefixed with `/api` in the server (e.g., `https://your-backend.example.com/api/coins`).
+All API endpoints are prefixed with `/api` in the server (e.g., `https://crypto-tracker-backend-6h95.onrender.com/api/coins`).
 
 ---
 
@@ -124,7 +126,7 @@ All API endpoints are prefixed with `/api` in the server (e.g., `https://your-ba
 
 Example Vercel / Netlify environment variables:
 
-- `VITE_API_URL` -> https://your-backend.example.com
+- `VITE_API_URL` -> https://crypto-tracker-backend-6h95.onrender.com
 
 ---
 
@@ -164,3 +166,11 @@ This approach improves reliability, reduces API dependency, and provides a faste
 If you'd like changes or improvements (e.g., secure cookie auth, better charting, pagination), open an issue or submit a PR.
 
 Replace placeholders above (URLs, repo URL) with your project's real values.
+
+## Database Look like
+
+![My Image](server/static/1.png)
+
+---
+
+![My Image](server/static/2.png)

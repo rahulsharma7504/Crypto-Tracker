@@ -5,7 +5,7 @@ import HistoryData from "../models/HistoryData.js";
 
 // Cron Job: Runs every hour
 export const startCronJob = () => {
-  console.log("⏳ Cron job initialized...");
+  console.log("ron job initialized...");
 
   // Every 1 hour (at minute 0)
   cron.schedule("0 * * * *", async () => {
