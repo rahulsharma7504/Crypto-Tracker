@@ -105,7 +105,11 @@ Usage and notes:
 - You can trigger history collection manually by calling the backend route `POST /api/coins/history` if you want an on-demand snapshot.
 - Make sure the server can reach CoinGecko (no firewall or networking restrictions).
 
-![My Image](server/static/3.png)
+---
+
+![Crone Image](server/static/3.png)
+
+
 ---
 
 ## API overview

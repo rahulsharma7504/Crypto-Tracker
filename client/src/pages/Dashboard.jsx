@@ -65,52 +65,56 @@ export default function Dashboard() {
     return sorted;
   }, [coins, query, changeFilter, sortBy]);
 
-  const columns = useMemo(() => [
-    {
-      title: 'Coin',
-      dataIndex: 'name',
-      key: 'name',
-      render: (_, record) => (
-        <Space>
-          <img src={record.image} alt={record.name} width={28} height={28} loading="lazy" />
-          <div>
-            <div style={{ fontWeight: 600 }}>{record.name}</div>
-            <div style={{ color: '#666' }}>{record.symbol.toUpperCase()}</div>
-          </div>
-        </Space>
-      ),
+const columns = useMemo(() => [
+  {
+    title: 'Coin',
+    dataIndex: 'name',
+    key: 'name',
+    render: (_, record) => (
+      <Space>
+        <img src={record.image} alt={record.name} width={28} height={28} loading="lazy" />
+        <div>
+          <div style={{ fontWeight: 600 }}>{record.name}</div>
+          <div style={{ color: '#666' }}>{record.symbol?.toUpperCase()}</div>
+        </div>
+      </Space>
+    ),
+  },
+  {
+    title: 'Price (USD)',
+    key: 'price',
+    align: 'right',
+    render: (_, record) => `$${(record.price || record.current_price || 0).toLocaleString()}`,
+  },
+  {
+    title: 'Market Cap',
+    key: 'marketCap',
+    align: 'right',
+    render: (_, record) => `$${formatNumber(record.marketCap || record.market_cap)}`,
+  },
+  {
+    title: '24h %',
+    key: 'change24h',
+    align: 'right',
+    render: (_, record) => {
+      const v = record.change24h ?? record.price_change_percentage_24h;
+      return <span style={{ color: v >= 0 ? 'green' : 'red' }}>{v ? v.toFixed(2) + '%' : '-'}</span>;
     },
-    {
-      title: 'Price (USD)',
-      dataIndex: 'current_price',
-      key: 'current_price',
-      render: (v) => `$${v ? v.toFixed(2) : '-'}`,
-      align: 'right',
-    },
-    {
-      title: 'Market Cap',
-      dataIndex: 'market_cap',
-      key: 'market_cap',
-      render: (v) => `$${formatNumber(v)}`,
-      align: 'right',
-    },
-    {
-      title: '24h %',
-      dataIndex: 'price_change_percentage_24h',
-      key: 'change24h',
-      render: (v) => (
-        <span style={{ color: v >= 0 ? 'green' : 'red' }}>{v ? v.toFixed(2) + '%' : '-'}</span>
-      ),
-      align: 'right',
-    },
-    {
-      title: 'Last Updated',
-      dataIndex: 'last_updated',
-      key: 'last_updated',
-      render: (v) => (v ? dayjs(v).format('YYYY-MM-DD HH:mm') : '-'),
-      align: 'right',
-    },
-  ], []);
+  },
+  {
+    title: 'Last Updated',
+    key: 'lastUpdated',
+    align: 'right',
+    render: (_, record) => (
+      record.lastUpdated
+        ? dayjs(record.lastUpdated).format('YYYY-MM-DD HH:mm')
+        : record.last_updated
+          ? dayjs(record.last_updated).format('YYYY-MM-DD HH:mm')
+          : '-'
+    ),
+  },
+], []);
+
 
   return (
     <div style={{ padding: 20 }}>
