@@ -136,6 +136,21 @@ Example Vercel / Netlify environment variables:
 
 ---
 
+## API Optimization & Caching (Rate Limit Fix)
+
+During deployment, the app was hitting CoinGecko’s public API directly, which caused a 429 “Too Many Requests” error due to rate limiting on shared hosting IPs (e.g., Render/Railway).
+
+To solve this, I implemented server-side caching using the node-cache library in the backend (coinController.js).
+This ensures:
+
+Only one real API call per minute to CoinGecko.
+
+All other requests within that period are served instantly from cache.
+
+If CoinGecko is temporarily unavailable, the app automatically falls back to MongoDB data (local cache).
+
+This approach improves reliability, reduces API dependency, and provides a faster user experience even on live deployment.
+
 ## Troubleshooting
 
 - Mixed Content errors: If your frontend is HTTPS and backend is HTTP, requests will be blocked. Use HTTPS backend or update `VITE_API_URL`.
